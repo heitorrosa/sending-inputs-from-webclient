@@ -9,22 +9,20 @@
   <button onclick="sendMessage()">Send</button>
 
   <script>
-    const socket = new WebSocket("ws://localhost:8080");
+    $(document).ready(function() {
+      // Inicializa o winsock
+      var ws = new WebSocket("ws://localhost:8080");
 
-    // When the WebSocket connection is opened, log it to the console
-    socket.onopen = function() {
-      console.log("WebSocket connection opened");
-    };
+      // Verifica se a conexão foi estabelecida
+      ws.onopen = function() {
+        console.log("Conexão com o winsock estabelecida!");
+      };
 
-    // When the WebSocket connection receives a message, log it to the console
-    socket.onmessage = function(event) {
-      console.log(event.data);
-    };
-
-    // When the WebSocket connection is closed, log it to the console
-    socket.onclose = function() {
-      console.log("WebSocket connection closed");
-    };
+      // Verifica se a conexão foi fechada
+      ws.onclose = function() {
+        console.log("Conexão com o winsock fechada!");
+      };
+    });
 
     function sendMessage() {
       const message = document.getElementById("message").value;
