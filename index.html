@@ -2,36 +2,29 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Botão para mandar mensagem</title>
+  <title>Sending Inputs</title></title>
 </head>
 <body>
+  <h1>Sending Inputs from Web to a Client</h1>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
-      // Inicializa o websocket
+      // Initialize a WebSocket
       var ws = new WebSocket("ws://localhost:8080");
 
-      // Adiciona um botão para mandar mensagem
-      $(document).on("click", "#send", function() {
-        // Envia a mensagem "atumalaca" para o servidor
-        ws.send($("#message").val());
-      });
-
-      // Adiciona uma caixa de texto para exibir o status da conexão
+      // A Text Box for verifying the actual connection status to the Client
       var status = $("#status");
 
-      // Verifica o status da conexão
+      // Verify the status of the connection
       ws.onopen = function() {
-        status.text("Conexão estabelecida!");
+        status.text("Websocket Connected");
       };
 
       ws.onclose = function() {
-        status.text("Conexão fechada!");
+        status.text("Websocket not Connected");
       };
     });
   </script>
-  <input type="text" id="message" placeholder="Digite a mensagem">
-  <button id="send">Enviar mensagem</button>
   <p id="status"></p>
 </body>
 </html>
