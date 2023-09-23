@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Sending Inputs</title></title>
+  <title>Sending Inputs</title>
 </head>
 <body>
   <h1>Sending Inputs from Web to a Client</h1>
@@ -22,6 +22,11 @@
 
       ws.onclose = function() {
         status.text("Websocket not Connected");
+
+        // Keep trying to reconnect
+        setTimeout(function() {
+          ws = new WebSocket("ws://localhost:80");
+        }, 1000);
       };
     });
   </script>
