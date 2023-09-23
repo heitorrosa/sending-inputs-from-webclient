@@ -7,6 +7,10 @@ using namespace std;
 
 int websocket()
 {
+	// Starts Winsock
+	WSADATA wsaData;
+	WSAStartup(MAKEWORD(2, 2), &wsaData);
+
 	// Create a WebSocket server socket
 SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 if (sock == INVALID_SOCKET) {
@@ -75,6 +79,7 @@ closesocket(sock);
 
 return 0;
 }
+
 int main() {
 	websocket();
 
