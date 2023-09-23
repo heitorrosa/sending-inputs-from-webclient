@@ -22,12 +22,6 @@
 
       ws.onclose = function() {
         status.text("Websocket not Connected");
-
-        // Keep trying to reconnect
-        setTimeout(function() {
-          ws = new WebSocket("ws://localhost:80");
-        }, 1000);
-      };
     });
   </script>
   <p id="status"></p>
