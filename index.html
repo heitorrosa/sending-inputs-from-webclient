@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>WebSocket Chat</title>
+  <meta charset="UTF-8">
+  <title>Botão para mandar mensagem</title>
 </head>
 <body>
-  <h1>WebSocket Chat</h1>
-  <input type="text" id="message" />
-  <button onclick="sendMessage()">Send</button>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
-      // Inicializa o winsock
+      // Inicializa o websocket
       var ws = new WebSocket("ws://localhost:8080");
 
-      // Verifica se a conexão foi estabelecida
+      // Adiciona um botão para mandar mensagem
+      $(document).on("click", "#send", function() {
+        // Envia a mensagem "atumalaca" para o servidor
+        ws.send($("#message").val());
+      });
+
+      // Adiciona uma caixa de texto para exibir o status da conexão
+      var status = $("#status");
+
+      // Verifica o status da conexão
       ws.onopen = function() {
-        console.log("Conexão com o winsock estabelecida!");
+        status.text("Conexão estabelecida!");
       };
 
-      // Verifica se a conexão foi fechada
       ws.onclose = function() {
-        console.log("Conexão com o winsock fechada!");
+        status.text("Conexão fechada!");
       };
     });
-
-    function sendMessage() {
-      const message = document.getElementById("message").value;
-      socket.send(message);
-    }
   </script>
+  <input type="text" id="message" placeholder="Digite a mensagem">
+  <button id="send">Enviar mensagem</button>
+  <p id="status"></p>
 </body>
 </html>
