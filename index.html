@@ -5,30 +5,36 @@
   <title>WebSocket Application</title>
 </head>
 <body>
+
+  <input type="text" id="message">
+  <button>Send</button>
+
   <script src="https://unpkg.com/ws@latest"></script>
 
   <script>
-    // Create a WebSocket client
     const ws = new WebSocket('ws://localhost:80');
+    const button = document.querySelector('button');
+    const messageInput = document.querySelector('#message');
 
-    // Connect to the WebSocket server
-    ws.on('open', function() {
-      console.log('WebSocket connection opened');
+    button.addEventListener('click', function() {
+      ws.send(messageInput.value);
     });
 
-    // Receive messages from the server
-    ws.on('message', function(message) {
+    ws.onopen = function() {
+      console.log('WebSocket connection opened');
+    };
+
+    ws.onmessage = function(message) {
       // Check if the message is "Hello from the client!"
       if (message === 'Hello from the client!') {
         // Print the message
-        console.log('Received message from client:', message);
+        console.log('Received message from server:', message);
       }
-    });
+    };
 
-    // Close the WebSocket connection
-    ws.on('close', function() {
+    ws.onclose = function() {
       console.log('WebSocket connection closed');
-    });
+    };
   </script>
 </body>
 </html>
