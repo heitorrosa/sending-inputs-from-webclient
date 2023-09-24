@@ -7,22 +7,31 @@
 <body>
 
   <input type="text" id="message">
-  <button>Send</button>
+  <button id="send-button">Send</button>
+
+  <p id="connection-status">Connecting...</p>
 
   <script src="https://unpkg.com/ws@latest"></script>
 
   <script>
-    const ws = new WebSocket('ws://localhost:80');
-    const button = document.querySelector('button');
+    const ws = new WebSocket('ws://heitorrosa.github.io/sending-inputs-from-webclient');
+    const button = document.querySelector('#send-button');
     const messageInput = document.querySelector('#message');
+    const connectionStatusText = document.querySelector('#connection-status');
+
+    ws.onopen = function() {
+      console.log('WebSocket connection opened');
+
+      // Enable the Send button
+      button.disabled = false;
+
+      // Update the connection status text
+      connectionStatusText.textContent = 'Connected';
+    };
 
     button.addEventListener('click', function() {
       ws.send(messageInput.value);
     });
-
-    ws.onopen = function() {
-      console.log('WebSocket connection opened');
-    };
 
     ws.onmessage = function(message) {
       // Check if the message is "Hello from the client!"
@@ -34,6 +43,12 @@
 
     ws.onclose = function() {
       console.log('WebSocket connection closed');
+
+      // Disable the Send button
+      button.disabled = true;
+
+      // Update the connection status text
+      connectionStatusText.textContent = 'Disconnected';
     };
   </script>
 </body>
