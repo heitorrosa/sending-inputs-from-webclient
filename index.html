@@ -2,32 +2,33 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Sending Inputs</title>
+  <title>WebSocket Application</title>
 </head>
 <body>
-  <h1>Sending Inputs from Web to a Client</h1>
   <script src="https://unpkg.com/ws@latest"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
   <script>
-import { WebSocket } from 'ws';
+    // Create a WebSocket client
+    const ws = new WebSocket('ws://localhost:80');
 
-const ws = new WebSocket('ws://localhost:80');
+    // Connect to the WebSocket server
+    ws.on('open', function() {
+      console.log('WebSocket connection opened');
+    });
 
-ws.on('open', function() {
-  console.log('WebSocket connection opened');
-});
+    // Receive messages from the server
+    ws.on('message', function(message) {
+      // Check if the message is "Hello from the client!"
+      if (message === 'Hello from the client!') {
+        // Print the message
+        console.log('Received message from client:', message);
+      }
+    });
 
-ws.on('message', function(message) {
-  console.log('Received message from server:', message);
-});
-
-ws.on('close', function() {
-  console.log('WebSocket connection closed');
-});
-
-// Send a message to the server
-ws.send('Hello from the client!');
+    // Close the WebSocket connection
+    ws.on('close', function() {
+      console.log('WebSocket connection closed');
+    });
   </script>
-  <p id="status"></p>
 </body>
 </html>
