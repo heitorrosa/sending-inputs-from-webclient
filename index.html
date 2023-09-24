@@ -14,13 +14,13 @@
   <script src="https://unpkg.com/ws@latest"></script>
 
   <script>
-    const ws = new WebSocket('localhost:80');
+    const ws = new WebSocket('ws://localhost:80');
     const button = document.querySelector('#send-button');
     const messageInput = document.querySelector('#message');
     const connectionStatusText = document.querySelector('#connection-status');
 
     ws.onopen = function() {
-      console.log('WebSocket connection opened');
+      console.log('Connected');
 
       // Enable the Send button
       button.disabled = false;
@@ -34,21 +34,21 @@
     });
 
     ws.onmessage = function(message) {
-      // Check if the message is "Hello from the client!"
-      if (message === 'Hello from the client!') {
+      // Check if the message is "localhost"
+      if (message === 'localhost') {
         // Print the message
         console.log('Received message from server:', message);
       }
     };
 
     ws.onclose = function() {
-      console.log('WebSocket connection closed');
+      console.log('Not Connected');
 
       // Disable the Send button
       button.disabled = true;
 
       // Update the connection status text
-      connectionStatusText.textContent = 'Disconnected';
+      connectionStatusText.textContent = 'Not Connected';
     };
   </script>
 </body>
