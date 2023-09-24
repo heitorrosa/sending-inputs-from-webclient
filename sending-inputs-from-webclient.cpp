@@ -6,17 +6,16 @@
 using namespace std;
 
 int websocket() {
-    // Starts Winsock
+    // Starts Winsock /// Create a WebSocket server socket
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
-    // Create a WebSocket server socket
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == INVALID_SOCKET) {
         return 1;
     }
 
-    // Bind the socket to a port
+    // Bind the socket to a port /// Listen for incoming connections
     sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(80);
@@ -24,8 +23,22 @@ int websocket() {
 
     bind(sock, (sockaddr*)&addr, sizeof(addr));
 
-    // Listen for incoming connections
     listen(sock, SOMAXCONN);
+
+    // Connect to the server ///// Convert the IP address to a binary format | Create a sockaddr_in structure
+    in_addr addr1;
+    if (inet_pton(AF_INET, "wss://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 0) {
+        // Handle error
+    }
+    sockaddr_in addr_in;
+    addr_in.sin_family = AF_INET;
+    addr_in.sin_port = htons(80); // Default port for HTTPS
+    addr_in.sin_addr = addr1;
+
+    int connect_result = connect(sock, (sockaddr*)&addr_in, sizeof(addr_in));
+    if (connect_result != 0) {
+        // Handle error
+    }
 
     // Keep the application running until you manually close it
     while (true) {
