@@ -14,7 +14,7 @@
   <script src="https://unpkg.com/ws@latest"></script>
 
   <script>
-    const ws = new WebSocket('ws://localhost:80');
+    const ws = new WebSocket('localhost:80');
     const button = document.querySelector('#send-button');
     const messageInput = document.querySelector('#message');
     const connectionStatusText = document.querySelector('#connection-status');
