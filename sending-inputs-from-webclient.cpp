@@ -24,10 +24,9 @@ int websocket() {
 
     bind(sock, (sockaddr*)&addr, sizeof(addr));
 
-    // Listen for incoming connections
+    // Listen for incoming connections & accepts it
     listen(sock, SOMAXCONN);
 
-    // Accept an incoming connection
     SOCKET client_sock = accept(sock, NULL, NULL);
     if (client_sock == INVALID_SOCKET) {
         return 1;
@@ -57,3 +56,4 @@ int main() {
 
     return 0;
 }
+ 
