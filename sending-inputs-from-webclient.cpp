@@ -39,7 +39,7 @@ int websocket()
 
 	// Convert the IP address to a binary format
 	in_addr addr1;
-	if (inet_pton(AF_INET, "wss://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 1) {
+	if (inet_pton(AF_INET, "ws://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 1) {
 	}
 
 	// Connect to the server
@@ -53,7 +53,7 @@ int websocket()
 	}
 
 	// Send a request to the server
-	char request[] = "GET / HTTP/1.1\r\nHost: heitorrosa.github.io/sending-inputs-from-webclient\r\n\r\n";
+	char request[] = "GET / HTTP/1.1\r\nHost: ws://heitorrosa.github.io/sending-inputs-from-webclient\r\n\r\n";
 	send(sock, request, sizeof(request), 0);
 
 	// Close the socket
