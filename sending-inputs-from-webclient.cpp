@@ -3,6 +3,8 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
+#pragma comment(lib, "ws2_32.lib")
+
 using namespace std;
 
 int websocket() {
@@ -25,9 +27,9 @@ int websocket() {
 
     listen(sock, SOMAXCONN);
 
-    // Connect to the server ///// Convert the IP address to a binary format | Create a sockaddr_in structure
+   // Convert the IP address to a binary format | Create a sockaddr_in structure
     in_addr addr1;
-    if (inet_pton(AF_INET, "wss://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 0) {
+    if (inet_pton(AF_INET, "ws://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 1) {
         // Handle error
     }
     sockaddr_in addr_in;
@@ -35,6 +37,7 @@ int websocket() {
     addr_in.sin_port = htons(80); // Default port for HTTPS
     addr_in.sin_addr = addr1;
 
+    // Connect to the server
     int connect_result = connect(sock, (sockaddr*)&addr_in, sizeof(addr_in));
     if (connect_result != 0) {
         // Handle error
