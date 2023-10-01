@@ -24,27 +24,20 @@ int websocket() {
     addr.sin_addr.s_addr = INADDR_ANY;
 
     bind(sock, (sockaddr*)&addr, sizeof(addr));
-
     listen(sock, SOMAXCONN);
 
-   // Convert the IP address to a binary format | Create a sockaddr_in structure
-    in_addr addr1;
-    if (inet_pton(AF_INET, "ws://heitorrosa.github.io/sending-inputs-from-webclient", &addr1) != 1) {
-        // Handle error
-    }
-    sockaddr_in addr_in;
-    addr_in.sin_family = AF_INET;
-    addr_in.sin_port = htons(80); // Default port for HTTPS
-    addr_in.sin_addr = addr1;
+    // Connect to the Github server
+    SOCKADDR_IN client_address;
+    client_address.sin_family = AF_INET;
+    client_address.sin_port = htons(80);
+    client_address.sin_addr.s_addr = inet_pton(AF_INET, "https://heitorrosa.github.io/sending-inputs-from-webclient/", &client_address.sin_addr.s_addr);
 
-    // Connect to the server
-    int connect_result = connect(sock, (sockaddr*)&addr_in, sizeof(addr_in));
-    if (connect_result != 0) {
-        // Handle error
-    }
+     int connect_result = connect(sock, (SOCKADDR*)&client_address, sizeof(client_address));
+     if (connect_result == SOCKET_ERROR) {
+     }
 
-    // Keep the application running until you manually close it
     while (true) {
+
         // Accept an incoming connection
         SOCKET client_sock = accept(sock, NULL, NULL);
         if (client_sock == INVALID_SOCKET) {
